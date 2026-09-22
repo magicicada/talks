@@ -1,0 +1,87 @@
+% Beamer mtheme
+%
+% Copyright 2014 Matthias Vogelgesang
+% Licensed under CC-BY-SA 4.0 International.
+%
+% The initial template comes from the HSRM beamer theme by Benjamin Weiss, which
+% you can find at https://github.com/hsrmbeamertheme/hsrmbeamertheme.
+%
+
+\ProvidesPackage{beamerfontthemeglasgow}
+
+\RequirePackage[no-math]{fontspec}
+
+
+\defaultfontfeatures{Mapping=tex-text}
+
+% Fira is loaded by FILE NAME rather than by family name, so it works whether or
+% not Fira Sans is installed as a system font: the .otf files ship with TeX Live
+% in the `fira' package.
+\setsansfont{FiraSans}[
+  Extension      = .otf,
+  UprightFont    = *-Light,
+  ItalicFont     = *-LightItalic,
+  BoldFont       = *-Regular,
+  BoldItalicFont = *-Italic,
+]
+\setmonofont{FiraMono}[
+  Extension      = .otf,
+  UprightFont    = *-Regular,
+  ItalicFont     = *-Oblique,
+  BoldFont       = *-Bold,
+  BoldItalicFont = *-BoldOblique,
+]
+\newfontfamily\ExtraLight{FiraSans}[
+  Extension   = .otf,
+  UprightFont = *-ExtraLight,
+  ItalicFont  = *-ExtraLightItalic,
+]
+\newfontfamily\Light{FiraSans}[
+  Extension   = .otf,
+  UprightFont = *-Light,
+  ItalicFont  = *-LightItalic,
+]
+\newfontfamily\Book{FiraSans}[
+  Extension      = .otf,
+  UprightFont    = *-Regular,
+  ItalicFont     = *-Italic,
+  BoldFont       = *-Bold,
+  BoldItalicFont = *-BoldItalic,
+]
+\newfontfamily\Medium{FiraSans}[
+  Extension   = .otf,
+  UprightFont = *-Medium,
+  ItalicFont  = *-MediumItalic,
+]
+
+\AtBeginEnvironment{tabular}{%
+  \setsansfont{FiraSans}[
+    Extension   = .otf,
+    UprightFont = *-Light,
+    ItalicFont  = *-LightItalic,
+    BoldFont    = *-Regular,
+    Numbers     = Monospaced,
+  ]%
+}
+
+\setbeamerfont{title}{family=\Book, size=\Large}
+\setbeamerfont{author}{family=\ExtraLight, size=\small}
+\setbeamerfont{date}{family=\ExtraLight, size=\small}
+
+\setbeamerfont{section title}{family=\Book, size=\Large}
+
+\setbeamerfont{block title}{family=\Book, size=\normalsize}
+\setbeamerfont{block title alerted}{family=\Book,size=\normalsize}
+
+\setbeamerfont{subtitle}{family=\Light, size=\fontsize{12}{14}}
+\setbeamerfont{frametitle}{family=\Book, series=\scshape, size=\large}
+
+\setbeamerfont{caption}{size=\small}
+\setbeamerfont{caption name}{family=\Book}
+
+\setbeamerfont{description item}{family=\Book}
+
+\setbeamerfont{page number in head/foot}{size=\scriptsize}
+
+
+\linespread{1.15}
