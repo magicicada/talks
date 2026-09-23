@@ -24,6 +24,13 @@
 \usetikzlibrary{decorations.pathreplacing}
 \usetikzlibrary{decorations.pathmorphing}
 \tikzset{snake it/.style={decorate, decoration=snake}}
+
+% styles for the matching examples
+\tikzset{
+  mvert/.style  = {circle, fill=university-slate, minimum size=5pt, inner sep=0pt},
+  medge/.style  = {university-slate, line width=0.7pt},
+  mmatch/.style = {university-pillarbox, line width=1.8pt},
+}
 \newcommand{\topline}
 {%
   \tikz[remember picture,overlay] {%
@@ -161,20 +168,115 @@ A few important ideas:
  \textsc{Maximum Temporal Matching}\\
  \textit{Input:} A temporal graph $(G,\lambda)$ and $\Delta \in \mathbb{N}$.\\
  \textit{Question:} What is the maximum cardinality of a set of time-edges $\mathcal{E}$ such that, for every pair of time-edges $(wx,t_1)$ and $(yz,t_2)$ in $\mathcal{E}$, either $\{w,x\} \cap \{y,z\} = \emptyset$ or $|t_1 - t_2| \ge \Delta$.
- \vspace{1cm}
+
+ \medskip
+
+\begin{columns}[t]
+\begin{column}{0.46\textwidth}
+\centering
+\begin{tikzpicture}
+  \node[mvert] (a) at (0,0) {};
+  \node[mvert] (b) at (1.3,0) {};
+  \node[mvert] (c) at (2.6,0) {};
+  \node[mvert] (d) at (3.9,0) {};
+  \node[below=3pt of a] {$a$};
+  \node[below=3pt of b] {$b$};
+  \node[below=3pt of c] {$c$};
+  \node[below=3pt of d] {$d$};
+  \draw[mmatch] (a) -- (b);
+  \draw[medge]  (b) -- (c);
+  \draw[mmatch] (c) -- (d);
+  \node[above=10pt] at (1.95,0) {\phantom{$\{2,5\}$}};
+\end{tikzpicture}
+
+\smallskip
+
+{\small A maximum matching in the footprint: \textbf{2 edges}}
+\end{column}
+\begin{column}{0.46\textwidth}
+\centering
+\begin{tikzpicture}
+  \node[mvert] (a) at (0,0) {};
+  \node[mvert] (b) at (1.3,0) {};
+  \node[mvert] (c) at (2.6,0) {};
+  \node[mvert] (d) at (3.9,0) {};
+  \node[below=3pt of a] {$a$};
+  \node[below=3pt of b] {$b$};
+  \node[below=3pt of c] {$c$};
+  \node[below=3pt of d] {$d$};
+  \draw[mmatch] (a) -- (b);
+  \draw[mmatch] (b) -- (c);
+  \draw[mmatch] (c) -- (d);
+  \node[above=2pt] at (0.65,0) {\small $\{2,\textcolor{university-pillarbox}{\mathbf{5}}\}$};
+  \node[above=2pt] at (1.95,0) {\small $\{\textcolor{university-pillarbox}{\mathbf{3}}\}$};
+  \node[above=2pt] at (3.25,0) {\small $\{\textcolor{university-pillarbox}{\mathbf{1}}\}$};
+\end{tikzpicture}
+
+\smallskip
+
+{\small A maximum $\Delta$-temporal matching, $\Delta = 2$: \textbf{3 time-edges}}
+\end{column}
+\end{columns}
+
+\medskip
+
+{\small $b$ and $c$ are each matched twice, because their two appearances are $\Delta$ apart. But we had to pick the \emph{right} appearance of $ab$: taking $(ab,2)$ instead of $(ab,5)$ would clash with $(bc,3)$.}
  }
 
 
 
  \only<2>{
+ \textsc{Eulerian Circuit} (the static problem)\\
+ \textit{Input:} A connected graph $G$.\\
+ \textit{Question:} Is there a closed walk using every edge exactly once?
+
+ \medskip
+
+ \textbf{Euler, 1736:} yes iff every vertex has \textbf{even degree}, and Hierholzer finds one in \textcolor{blue}{linear time}.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.78,
+  enum/.style={fill=white, inner sep=1pt, font=\scriptsize, text=university-pillarbox}]
+  \node[mvert] (A) at (1.4, 2.6) {};
+  \node[mvert] (B) at (0.0, 1.9) {};
+  \node[mvert] (C) at (0.0, 0.5) {};
+  \node[mvert] (D) at (1.4,-0.2) {};
+  \node[mvert] (E) at (2.4, 3.1) {};
+  \node[mvert] (F) at (4.2, 3.1) {};
+  \node[mvert] (G) at (5.5, 2.6) {};
+  \node[mvert] (H) at (3.6, 1.2) {};
+  \node[mvert] (I) at (7.0, 1.3) {};
+  \node[mvert] (J) at (5.6,-0.1) {};
+  \draw[medge] (A) -- (B) node[enum, midway] {1};
+  \draw[medge] (B) -- (C) node[enum, midway] {2};
+  \draw[medge] (C) -- (D) node[enum, midway] {3};
+  \draw[medge] (D) -- (A) node[enum, midway] {4};
+  \draw[medge] (A) -- (E) node[enum, midway] {5};
+  \draw[medge] (E) -- (F) node[enum, midway] {6};
+  \draw[medge] (F) -- (G) node[enum, midway] {7};
+  \draw[medge] (G) -- (H) node[enum, midway] {8};
+  \draw[medge] (H) -- (D) node[enum, midway] {9};
+  \draw[medge] (D) -- (J) node[enum, midway] {10};
+  \draw[medge] (J) -- (G) node[enum, midway] {11};
+  \draw[medge] (G) -- (I) node[enum, midway] {12};
+  \draw[medge] (I) -- (J) node[enum, midway] {13};
+  \draw[medge] (J) -- (H) node[enum, midway] {14};
+  \draw[medge] (H) -- (A) node[enum, midway] {15};
+\end{tikzpicture}
+\end{center}
+
+{\small Every degree here is $2$ or $4$: the numbers give one Eulerian circuit.}
+ }
+
+ \only<3>{
  \textsc{TempEuler}\\
  \textit{Input:} A temporal graph $(G,\lambda)$.\\
  \textit{Question:} Is there a closed temporal walk that contains every edge of $G$ exactly once?\\
  \vspace{0.5cm}
 
- \only<2>{Note: this is also called \textsc{Eulerian Trail} by Marino \& Silva.}
+ \only<3>{Note: this is also called \textsc{Eulerian Trail} by Marino \& Silva.}
 
-\only<2>{
+\only<3>{
 \begin{center}
 \includegraphics[width = 0.8 \linewidth]{TempEuler}
 \end{center}
@@ -184,17 +286,17 @@ A few important ideas:
 
 
 
-\only<3-4>{
+\only<4-5>{
 \textsc{StarExp}\\
 \textit{Input:} A temporal graph $(S_n,\lambda)$, where $S_n$ is a star with $n$ leaves.\\
 \textit{Question:} Does there exist a temporal walk, starting and ending at the centre of the star, that visits every vertex?
 
 
 \begin{center}
-\only<3>{%
+\only<4>{%
 \includegraphics[width=0.5 \linewidth]{StarExp_Yes}%
 }
-\only<4>{%
+\only<5>{%
 \includegraphics[width=0.5 \linewidth]{StarExp_No}%
 }
 \end{center}
@@ -276,14 +378,14 @@ Suppose you want to solve one of these, and you want to solve it \textbf{exactly
 
 \begin{itemize}
 \item \redout{Give up}
-\item Approximate it - but some problems are hard to approximate, and sometimes an approximate answer isn't an answer
-\item Throw a solver or a heuristic at it - often excellent in practice, but no guarantees
-\item Accept an exponential in $n$ - fine until $n$ is the size of the cattle trade network
+\item Approximate it - but this may be impossible or insufficient
+\item Heuristics - often excellent in practice, but no guarantees
+\item Use a solver and accept an exponential in $n$ - fine until $n$ is the size of the cattle trade network
 \end{itemize}
 
 \bigskip
 
-\textbf{Or: work out what it is about your instances that makes them easy, measure that, and pay the exponential only in the measurement.}
+\textbf{Parameterised approach: work out what it is about your instances that makes them hard and tolerate an exponential related to that if it is small.}
 \end{frame}
 
 
@@ -357,19 +459,6 @@ A parameter earns its keep if:
 \end{frame}
 
 
-\begin{frame}{When it doesn't work}
-Not everything is FPT, and there is a theory of why not.
-
-\begin{itemize}
-\item \textbf{\textcolor{red}{W[1]-hard}}: no FPT algorithm unless the parameterised hierarchy collapses.  The standard example is \textsc{Clique} parameterised by solution size - we believe you cannot do better than roughly $n^{k}$.
-\item \textbf{\textcolor{red}{para-NP-hard}}: the problem is already NP-hard for some \emph{fixed, constant} value of the parameter.  Then the parameter is simply the wrong one.
-\end{itemize}
-
-\bigskip
-
-\textbf{Choosing badly is easy, and on temporal graphs it is easier still: several very natural parameters turn out to be para-NP-hard.}
-\end{frame}
-
 
 \begin{frame}{So we need parameterised approaches!}
 How might we parameterise?
@@ -419,7 +508,7 @@ A sampler:
     \item temporal modular width
     \item temporal cliquewidth
     \end{itemize}
-    \item \textbf{temporal clustering closedness}
+    \item temporal clustering closedness
     
 \end{itemize}
 
@@ -966,6 +1055,31 @@ Any temporal graph property expressible in first-order logic admits an FPT algor
 
 % \end{frame}
 
+
+
+
+\begin{frame}{Summary and Thanks!}
+\textbf{In summary:\\}
+There are a variety of approaches to parameters for temporal graphs.  Next up:
+
+\begin{itemize}
+\item Find more problems that are tractable parameterised by these parameters
+% \pause
+\vspace{0.5cm}
+\item Is there a Courcelle-style metatheorem for temporal cliquewidth?
+% \pause
+\vspace{0.5cm}
+\item Investigate the values of these parameters on real-world temporal networks 
+\end{itemize}
+
+
+\end{frame}
+
+
+%% ===================================================================
+%% Extra material: temporal c-closedness (shown after the thanks slide)
+%% ===================================================================
+
 \begin{frame}{Temporal c-closedness}
 Now for something more inspired by the complex networks community.  
 
@@ -1157,24 +1271,6 @@ The picture is similar for closedness measures.
 \item When are these useful?
 \item What is the right time step?
 \item Where do these fit in the landscape of temporal graph parameters?
-\end{itemize}
-
-
-\end{frame}
-
-
-\begin{frame}{Summary and Thanks!}
-\textbf{In summary:\\}
-There are a variety of approaches to parameters for temporal graphs.  Next up:
-
-\begin{itemize}
-\item Find more problems that are tractable parameterised by these parameters
-% \pause
-\vspace{0.5cm}
-\item Is there a Courcelle-style metatheorem for temporal cliquewidth?
-% \pause
-\vspace{0.5cm}
-\item Investigate the values of these parameters on real-world temporal networks 
 \end{itemize}
 
 
