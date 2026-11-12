@@ -54,7 +54,7 @@
 \title{Temporal graphs: parameters and games}
 \subtitle{}
 \date{12 November 2026}
-\author{Jess Enright, Sam Hand, Laura Larios-Jones, Tom Davot, Jayakrishnan Madathil, Kitty Meeks, many others}
+\author{Jess Enright, Sam Hand, Laura Larios-Jones, Tom Davot, Jayakrishnan Madathil, Kitty Meeks, Georg Tennigkeit, Elena Moss, Ella Yates, many others}
 \institute{School of Computing Science, University of Glasgow}
 
 
@@ -129,6 +129,15 @@ The Plan
 % \item Convenient temporal locality notion\textcolor{red}{s}
 % \item Solving these convenient problems using VIM and TIM decompositions
 % \end{itemize}
+\end{frame}
+
+
+\begin{frame}[c]{Why am I giving this talk?}
+\vspace{0.4cm}
+\noindent
+\includegraphics[width=0.44\linewidth]{penguin.png}%
+\hfill
+\includegraphics[width=0.54\linewidth]{st-andrews.png}
 \end{frame}
 
 \begin{frame}{Temporal graphs}
@@ -237,7 +246,8 @@ A few important ideas:
 
  \medskip
 
- \textbf{Euler, 1736:} yes iff every vertex has \textbf{even degree}, and Hierholzer finds one in \textcolor{blue}{linear time}.
+ \textbf{Euler, 1736:} yes iff every vertex has \textbf{even degree}
+ %, and Hierholzer finds one in \textcolor{blue}{linear time}.
 
 \begin{center}
 \begin{tikzpicture}[scale=0.78,
@@ -360,14 +370,14 @@ So: why are you ruining your life (and the lives of your students) with these, J
 \begin{figure}
     \centering
     \includegraphics[width=1\linewidth]{cow-tardis.png}
-\end{figure}
-\end{frame}
-
-
-\begin{frame}{Humans get diseases too}
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\linewidth]{human-epi-networks.png}
+%\end{figure}
+%\end{frame}
+%
+%
+%\begin{frame}{Humans get diseases too}
+%\begin{figure}
+%    \centering
+%    \includegraphics[width=0.8\linewidth]{human-epi-networks.png}
 \end{figure}
 
 
@@ -427,48 +437,48 @@ $n^{k}$ & about $10^{80}$ steps: not fine \\
 \end{center}
 \end{frame}
 
-
-\begin{frame}{The classic example}
-\textsc{Vertex Cover}\\
-\textit{Input:} A graph $G$ and an integer $k$.\\
-\textit{Question:} Is there a set of at most $k$ vertices meeting every edge?
-
-\bigskip
-
-\textcolor{red}{NP-complete}, but: pick any edge $uv$; every cover contains $u$ or $v$.  Branch on which, and recurse with $k - 1$.
-
-\bigskip
-
-A search tree of depth $k$ and branching factor 2 gives $\mathcal{O}(2^{k}(n + m))$.
-
-\bigskip
-
-\textbf{So a 300-vertex network with a cover of size 20 is entirely reasonable, even though the problem is NP-complete.}
-\end{frame}
-
-
-\begin{frame}{Where does the parameter come from?}
-Two broad flavours:
-
-\begin{itemize}
-\item \textbf{Solution size} - $k$ is the thing you are asked for: the size of the cover, the number of deletions, the length of the walk.
-\item \textbf{Structural width} - $k$ measures how far the input is from something we can already handle: treewidth, vertex cover number, neighbourhood diversity, cliquewidth.
-\end{itemize}
-
-\bigskip
-
-A parameter earns its keep if:
-\begin{itemize}
-\item it is genuinely \textbf{small} on the instances we care about,
-\item we can \textbf{compute} (or approximate) it, and
-\item bounding it actually \textbf{buys} us an algorithm.
-\end{itemize}
-
-\bigskip
-
-\textbf{The first of these is an empirical question - we will come back to it at the end.}
-\end{frame}
-
+%
+%\begin{frame}{The classic example}
+%\textsc{Vertex Cover}\\
+%\textit{Input:} A graph $G$ and an integer $k$.\\
+%\textit{Question:} Is there a set of at most $k$ vertices meeting every edge?
+%
+%\bigskip
+%
+%\textcolor{red}{NP-complete}, but: pick any edge $uv$; every cover contains $u$ or $v$.  Branch on which, and recurse with $k - 1$.
+%
+%\bigskip
+%
+%A search tree of depth $k$ and branching factor 2 gives $\mathcal{O}(2^{k}(n + m))$.
+%
+%\bigskip
+%
+%\textbf{So a 300-vertex network with a cover of size 20 is entirely reasonable, even though the problem is NP-complete.}
+%\end{frame}
+%
+%
+%\begin{frame}{Where does the parameter come from?}
+%Two broad flavours:
+%
+%\begin{itemize}
+%\item \textbf{Solution size} - $k$ is the thing you are asked for: the size of the cover, the number of deletions, the length of the walk.
+%\item \textbf{Structural width} - $k$ measures how far the input is from something we can already handle: treewidth, vertex cover number, neighbourhood diversity, cliquewidth.
+%\end{itemize}
+%
+%\bigskip
+%
+%A parameter is worth it if:
+%\begin{itemize}
+%\item it is genuinely \textbf{small} on the instances we care about,
+%\item we can \textbf{compute} (or approximate) it, and
+%\item bounding it actually \textbf{buys} us an algorithm.
+%\end{itemize}
+%
+%\bigskip
+%
+%\textbf{The first of these is an empirical question - we will come back to it at the end.}
+%\end{frame}
+%
 
 
 \begin{frame}{So we need parameterised approaches!}
@@ -761,55 +771,55 @@ What ingredients did we need?
 %     \centering
 %     \includegraphics[width=0.95\linewidth]{hamiltonian-path-local-example.png}
 % \end{figure}
-% \end{frame}
-
-\begin{frame}{But there's more!}
-\redout{Tree Interval Membership} TIM width
-\begin{figure}
-    \centering
-    \includegraphics[width=0.3\linewidth]{all-the-widths.png}
-\end{figure}
-
-Here we need to be able to ignore not just vertices that are done being active or not yet active, but also ones that are in a different component in a particular way.
-
-\end{frame}
-
-% \begin{frame}
-% \begin{figure}
-%     \centering
-%     \includegraphics[width=0.75\linewidth]{time-decom-example.png}
-% \end{figure}
-% \end{frame}
-
-
-\begin{frame}{TIM is more complicated}
-Sometimes TIM is more useful, sometimes VIM. 
-
-\begin{tabular}{| c | c | c |}
- \hline
- \textbf{Problem} & \textbf{VIMW} & \textbf{TIMW} \\
- \hline
-%  \textsc{Temporal Dominating Set}  & FPT  & FPT  \\
+%% \end{frame}
+%
+%\begin{frame}{But there's more!}
+%\redout{Tree Interval Membership} TIM width
+%\begin{figure}
+%    \centering
+%    \includegraphics[width=0.3\linewidth]{all-the-widths.png}
+%\end{figure}
+%
+%Here we need to be able to ignore not just vertices that are done being active or not yet active, but also ones that are in a different component in a particular way.
+%
+%\end{frame}
+%
+%% \begin{frame}
+%% \begin{figure}
+%%     \centering
+%%     \includegraphics[width=0.75\linewidth]{time-decom-example.png}
+%% \end{figure}
+%% \end{frame}
+%
+%
+%\begin{frame}{TIM is more complicated}
+%Sometimes TIM is more useful, sometimes VIM. 
+%
+%\begin{tabular}{| c | c | c |}
 % \hline
-\textsc{Temporal Hamiltonian Path}  & FPT  & FPT  \\
-\hline
-\textsc{$\Delta$-Temporal Matching}  & FPT  & FPT  \\
-\hline
-\textsc{Temporal Reachability Edge Deletion}  & FPT~[already known]  & FPT  \\
-\hline
-\textsc{Temporal Firefighter}  & FPT~[already known]  & NP-hard \\
-\hline
-\end{tabular}
-
-\bigskip
-
-\textbf{We have characterisations of problems that admit algorithms FPT by TIM and VIM by the requirements on those building blocks.}
-
-\bigskip
-
-These parameters are so helpful because they enforce sparseness: most vertices can be ignored most of the time.   
-
-\end{frame}
+% \textbf{Problem} & \textbf{VIMW} & \textbf{TIMW} \\
+% \hline
+%%  \textsc{Temporal Dominating Set}  & FPT  & FPT  \\
+%% \hline
+%\textsc{Temporal Hamiltonian Path}  & FPT  & FPT  \\
+%\hline
+%\textsc{$\Delta$-Temporal Matching}  & FPT  & FPT  \\
+%\hline
+%\textsc{Temporal Reachability Edge Deletion}  & FPT~[already known]  & FPT  \\
+%\hline
+%\textsc{Temporal Firefighter}  & FPT~[already known]  & NP-hard \\
+%\hline
+%\end{tabular}
+%
+%\bigskip
+%
+%\textbf{We have characterisations of problems that admit algorithms FPT by TIM and VIM by the requirements on those building blocks.}
+%
+%\bigskip
+%
+%These parameters are so helpful because they enforce sparseness: most vertices can be ignored most of the time.   
+%
+%\end{frame}
 
 
 \begin{frame}{We wanted parameters for `denser' temporal graphs}
@@ -821,19 +831,19 @@ We have started using a few generalisations from static parameters that allow lo
 
 \end{frame}
 
-\begin{frame}{Neighbourhood diversity}
-
-The \emph{neighbourhood diversity} of a graph $G = (V,E)$ is the smallest integer $k$ such that $V$ can be partitioned into sets $V_1,\dots,V_k$ with the property that, if $x,y \in V_i$ for any $i$ then $N(x)\setminus \{y\} = N(y)\setminus \{x\}$.
-%Very restrictive -- number of numbers
-
-\begin{center}
-
-
-\includegraphics[width=0.5 \linewidth]{neighbourhood_diversity_graph}
-
-\end{center}
-
-\end{frame}
+%\begin{frame}{Neighbourhood diversity}
+%
+%The \emph{neighbourhood diversity} of a graph $G = (V,E)$ is the smallest integer $k$ such that $V$ can be partitioned into sets $V_1,\dots,V_k$ with the property that, if $x,y \in V_i$ for any $i$ then $N(x)\setminus \{y\} = N(y)\setminus \{x\}$.
+%%Very restrictive -- number of numbers
+%
+%\begin{center}
+%
+%
+%\includegraphics[width=0.5 \linewidth]{neighbourhood_diversity_graph}
+%
+%\end{center}
+%
+%\end{frame}
 \begin{frame}{Neighbourhood diversity}
 
 The \emph{neighbourhood diversity} of a graph $G = (V,E)$ is the smallest integer $k$ such that $V$ can be partitioned into sets $V_1,\dots,V_k$ with the property that, if $x,y \in V_i$ for any $i$ then $N(x)\setminus \{y\} = N(y)\setminus \{x\}$.
@@ -955,9 +965,11 @@ Temporal Graph Burning:
     \includegraphics[width=0.9\linewidth]{target.png}
 \end{figure}
 
-\begin{conj}
-Any temporal graph property expressible in first-order logic admits an FPT algorithm parameterised simultaneously by the temporal cliquewidth and the length of the formula.
-\end{conj}
+\bigskip
+
+\textbf{Ongoing work:}
+Giving relationships between logical fragments that we need to express a given problem, and which parameters work for that problem
+
 
 \end{frame}
 
@@ -1070,20 +1082,32 @@ Any temporal graph property expressible in first-order logic admits an FPT algor
 
 
 \begin{frame}{Games on temporal graphs}
-Two classical graph games, both about \textbf{catching} or \textbf{covering} quickly:
+I like to play games onl graphs - here I'm going to talk to you about one of them that has a natural temporal version.
 
 \bigskip
 
 \begin{itemize}
 \item \textbf{Cops and Robbers} (Quilliot 1978; Nowakowski \& Winkler 1983): cops and a robber alternate moves along edges; the cop number $c(G)$ is the fewest cops that always catch the robber.
-\bigskip
-\item \textbf{Graph Burning} (Bonato, Janssen \& Roshanbin 2016): each round a new fire is lit and every fire spreads to all neighbours; the burning number is the fewest rounds to burn everything.
+%\bigskip
+%\item \textbf{Graph Burning} (Bonato, Janssen \& Roshanbin 2016): each round a new fire is lit and every fire spreads to all neighbours; the burning number is the fewest rounds to burn everything.
 \end{itemize}
 
-\bigskip
+% I should put an example cops and robbers image here
 
-Both have natural temporal versions --- and in both, \textbf{time cuts both ways}: it can rescue the robber, and it can trap him.
+
 \end{frame}
+
+
+\begin{frame}{Two plays of Cops and Robbers}
+\begin{center}
+\resizebox{0.95\linewidth}{!}{\input{JEn2026-01.tex}}
+\end{center}
+
+\medskip
+
+{\small Above: the cop corners the robber on a tree. Below: on $C_4$ the robber simply keeps his distance.}
+\end{frame}
+
 
 
 \begin{frame}{Periodic temporal graphs}
@@ -1121,7 +1145,18 @@ Natural whenever the timetable repeats: shift patterns, bus routes, seasonal con
 
 \medskip
 
-{\small A finer variant: give each \emph{edge} its own binary pattern of length $\ell_e$, present at time $t$ iff $b_e(t \bmod \ell_e) = 1$. The period is then $\mathrm{lcm}$ of the $\ell_e$.}
+{\small A finer variant: give each \emph{edge} its own binary pattern of length $\ell_e$, present at time $t$ iff $b_e(t \bmod \ell_e) = 1$. The period $p$ is then the $\mathrm{lcm}$ of the $\ell_e$.}
+\end{frame}
+
+
+\begin{frame}{The same game, with time}
+\begin{center}
+\resizebox{0.92\linewidth}{!}{\input{temporal-cr-example.tex}}
+\end{center}
+
+\medskip
+
+{\small The same $C_4$, now with times: at even times $da$ is off, at odd times $ab$ is off. The robber is caught in two moves --- at $t=0$ his only way out of the corner is switched off.}
 \end{frame}
 
 
@@ -1131,103 +1166,96 @@ The cop moves first and sees the robber; each may stay put or cross an edge \tex
 \bigskip
 
 \begin{itemize}
-\item Whether one cop wins is decidable in $\mathcal{O}(\mathrm{lcm}(L)\cdot n^3)$ time, and in $\mathcal{O}(\mathrm{lcm}(L)\cdot k \cdot n^{k+2})$ for $k$ cops \textit{(Erlebach \& Spooner 2020)}.
+\item Whether one cop wins is decidable in $\mathcal{O}(p \cdot n^3)$ time, and in $\mathcal{O}(p \cdot k \cdot n^{k+2})$ for $k$ cops \textit{(Erlebach \& Spooner 2020)}.
 \bigskip
 \item Improved for one cop to $\mathcal{O}(p n^2 + nm)$, with a characterisation of the cop-win periodic graphs \textit{(de Carufel, Flocchini, Santoro \& Simard 2023)}.
 \end{itemize}
 
 \bigskip
 
-\textbf{Note what the parameter is:} the period, not the lifetime. Everything is polynomial \textcolor{blue}{once the period is bounded}, and the blow-up when $\mathrm{lcm}(L)$ is large is the interesting part.
+%\textbf{Note what the parameter is:} the period, not the lifetime. Everything is polynomial \textcolor{blue}{once the period is bounded}, and the blow-up when $\mathrm{lcm}(L)$ is large is the interesting part.
 \end{frame}
 
 
+
+
+
+
 \begin{frame}{Even cycles are interesting again}
-On a static cycle $C_n$ with $n \geq 4$, one cop \textbf{never} catches the robber: he simply walks away.
+On a static cycle $C_n$ with $n \geq 4$, one cop \textbf{never} catches the robber: they just dance around opposite each other.
 
 \bigskip
 
 Make the cycle edge-periodic and this changes:
 
 \begin{itemize}
-\item there are \textbf{cop-win} edge-periodic cycles of length $3\,\mathrm{lcm}(L)$;
-\item but every edge-periodic cycle with $n \geq 2\ell\cdot\mathrm{lcm}(L)$ is \textbf{robber-win} \textit{(Erlebach \& Spooner 2020)}.
+\item there are \textbf{cop-win} edge-periodic cycles of length $3p$;
+\item but every edge-periodic cycle with $n \geq 4p$ is \textbf{robber-win} \textit{(Erlebach \& Spooner 2020)}.
 \end{itemize}
 
 \bigskip
 
-\textbf{So it is the length measured against the period that decides --- a missing edge at the right moment is a wall the robber cannot pass.}
+\textbf{A missing edge at the right moment is a wall the robber cannot move through.}
 \end{frame}
 
 
 \begin{frame}{How bad can a schedule be?}
-Our question: fix the footprint, and let an adversary choose the periodic schedule.
+Fix static graphs $G_0, \dots, G_{d-1}$. Their \emph{periodic product} $G_0 \boxplus \cdots \boxplus G_{d-1}$ has the Cartesian product as its vertex set, and at time $i$ \textbf{only the edges of dimension $i$ are active}.
 
 \medskip
 
+Take the simplest factor, $K_2$, and write $(K_2)^{\boxplus d}$ for $d$ copies:
 \[
-  \hat{c}_{\max}(G) \;=\; \max \{\, c(\mathcal{G}) : \mathcal{G} \text{ periodic with footprint } G \,\}
+  \mathcal{Q}_d \;=\; (K_2)^{\boxplus d}
 \]
+has the $d$-dimensional hypercube as its footprint, with one dimension live at a time.
 
-\bigskip
+\medskip
 
 \begin{itemize}
-\item $\hat{c}_{\max}(G) \leq \mathrm{tw}(G) + 1$, so bounded treewidth still saves you.
-\item The footprint alone tells you very little: scheduling can cost you many extra cops.
+\item Statically, $c(Q_d) = \lfloor d/2 \rfloor + 1$.
+\item Periodically, $c(\mathcal{Q}_d) \geq d$ --- and this is tight for $d \leq 5$.
 \end{itemize}
 
-\bigskip
+\medskip
 
-% TODO Jess: fill in your coauthors' surnames (Fred / Georg) before the talk
-\textit{Work in progress with Fred and Georg, begun at Dagstuhl.}
+\textbf{Scheduling the same edges roughly doubles the number of cops you need.}
+
+\medskip
+
+\textit{\small With Fr\'ed\'eric Simard and Georg Tennigkeit, begun at Dagstuhl Seminar 26251.}
 \end{frame}
 
 
-\begin{frame}{Hypercubes}
-\begin{columns}[c]
-\begin{column}{0.56\textwidth}
-We can force the cop number up on the hypercube by activating one dimension at a time:
+\begin{frame}{Hypercubes and a tenure game}
+\textbf{The European Tenure Game} (D\"orr; after Spencer): $c$ chips sit on levels $1, 2, 3, \dots$, all starting at level $1$. Each round Pusher proposes a set of chips; Chooser either \textbf{accepts} --- those rise one level, the rest drop to level $1$ --- or \textbf{rejects} --- the rest rise one level, the proposed chips drop to level $1$. Pusher wins by getting a chip to the target level.
+
+\bigskip
+
+\begin{theorem}
+$c$ cops win on $\mathcal{Q}_d$, with all cops starting in one corner and the robber in the opposite corner, if and only if Pusher wins the European Tenure Game with $c$ chips and target level $d$.
+\end{theorem}
 
 \medskip
 
-\begin{claimblock}
-$\hat{c}_{\max}(Q_k) \geq k$.
-\end{claimblock}
-
-\medskip
-
-{\small (Believed, under internal review --- the schedule activates dimension $i$ at step $i$, and the robber keeps a dimension free of each cop.)}
-
-\medskip
-
-\textbf{We expected equality. The computations say otherwise:} $d = 6$ needs $8$ cops, $d = 7$ needs $12$.
-
-\end{column}
-\begin{column}{0.44\textwidth}
-\begin{figure}
-\centering
-\includegraphics[width=\linewidth]{grid_with_copnum_3.png}
-\end{figure}
-{\footnotesize The same trick on $P_4 \square P_4$: period $9$, and we think $3$ cops are needed.}
-\end{column}
-\end{columns}
+{\small \textcolor{gray}{Proved} by a bisimulation. Still open: arbitrary starting positions, and what known tenure-game results then say about cops.}
 \end{frame}
 
-\begin{frame}{Summary and Thanks!}
-\textbf{In summary:\\}
-There are a variety of approaches to parameters for temporal graphs.  Next up:
+\begin{frame}{Thanks!}
+Thanks to you all and to many collaborators!
 
-\begin{itemize}
-\item Find more problems that are tractable parameterised by these parameters
-% \pause
-\vspace{0.5cm}
-\item Is there a Courcelle-style metatheorem for temporal cliquewidth?
-% \pause
-\vspace{0.5cm}
-\item Investigate the values of these parameters on real-world temporal networks 
-\end{itemize}
+\vfill
 
+\begin{center}
+\includegraphics[height=2.1cm]{epsrc.png}
+\hspace{1.5cm}
+\raisebox{0.35cm}{\includegraphics[height=1.4cm]{dagstuhl.png}}
+\end{center}
 
+\vfill
+
+{\small The periodic games work was begun at Dagstuhl Seminar 26251,
+\textit{Temporal Graphs: Structure, Algorithms, Applications}.}
 \end{frame}
 
 
